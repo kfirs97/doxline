@@ -1,0 +1,143 @@
+{
+  "name": "doxline-doxygen-generator",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "test": "node esbuild.mjs --tests && node --test dist-test/*.test.js",
+    "package": "node esbuild.mjs --production && vsce package --no-dependencies",
+    "e2e": "node esbuild.mjs && esbuild e2e/run.ts e2e/suite.ts --bundle --platform=node --format=cjs --external:vscode --external:@vscode/test-electron --outdir=dist-test/e2e --log-level=warning && node dist-test/e2e/run.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "ovsx": "^1.2.0",
+    "typescript": "^5.9.3"
+  },
+  "displayName": "Doxline \u2014 Doxygen & Javadoc Comment Generator",
+  "description": "Generate Doxygen comments for C and C++ (and Javadoc for Java): type /** above a function, class or macro to get @brief, @tparam, @param, @return and @throws. A maintained alternative to Doxygen Documentation Generator.",
+  "publisher": "branchline",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "doxygen",
+    "doxdocgen",
+    "c++",
+    "cpp",
+    "c",
+    "javadoc",
+    "documentation",
+    "comments",
+    "docstring",
+    "doxygen generator"
+  ],
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#1d2b3a",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kfirs97/doxline.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kfirs97/doxline/issues"
+  },
+  "homepage": "https://github.com/kfirs97/doxline#readme",
+  "sponsor": {
+    "url": "https://dealership6.gumroad.com/l/support"
+  },
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:c",
+    "onLanguage:cpp",
+    "onLanguage:cuda-cpp",
+    "onLanguage:objective-c",
+    "onLanguage:objective-cpp",
+    "onLanguage:java"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "doxline.generate",
+        "title": "Generate Doc Comment",
+        "category": "Doxline"
+      },
+      {
+        "command": "doxline.generateFile",
+        "title": "Generate Doc Comments for Entire File (Pro)",
+        "category": "Doxline"
+      },
+      {
+        "command": "doxline.enterLicense",
+        "title": "Enter Pro License Key",
+        "category": "Doxline"
+      },
+      {
+        "command": "doxline.removeLicense",
+        "title": "Remove Pro License Key",
+        "category": "Doxline"
+      },
+      {
+        "command": "doxline.buyPro",
+        "title": "Get Doxline Pro",
+        "category": "Doxline"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "doxline.generate",
+        "key": "ctrl+alt+d",
+        "mac": "cmd+alt+d",
+        "when": "editorTextFocus && editorLangId =~ /^(c|cpp|cuda-cpp|objective-c|objective-cpp|java)$/"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "doxline.generate",
+          "when": "editorLangId =~ /^(c|cpp|cuda-cpp|objective-c|objective-cpp|java)$/",
+          "group": "doxline@1"
+        },
+        {
+          "command": "doxline.generateFile",
+          "when": "editorLangId =~ /^(c|cpp|cuda-cpp|objective-c|objective-cpp|java)$/",
+          "group": "doxline@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Doxline",
+      "properties": {
+        "doxline.commandPrefix": {
+          "type": "string",
+          "enum": [
+            "@",
+            "\\"
+          ],
+          "default": "@",
+          "description": "Command style: @param or \\param."
+        },
+        "doxline.includeBrief": {
+          "type": "boolean",
+          "default": true,
+          "description": "Start comments with @brief."
+        },
+        "doxline.placeholder": {
+          "type": "string",
+          "default": "Description",
+          "description": "Placeholder text for descriptions."
+        }
+      }
+    }
+  }
+}
