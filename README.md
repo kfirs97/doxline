@@ -1,4 +1,4 @@
-# Doxline — Doxygen & Javadoc Comment Generator
+# Doxline — Doxygen & Javadoc Comments
 
 **Type `/**` above a declaration and get a complete doc comment.** Doxline reads C and C++ (and Java) declarations — templates, parameters, return types, constructors, operators, macros — and writes a Doxygen block with tab stops for every description.
 
@@ -40,7 +40,7 @@ Run **`Doxline: Get Doxline Pro`**, then **`Doxline: Enter Pro License Key`**.
 
 ## Also by the author
 
-- **[Docline — Python Docstring Generator](https://marketplace.visualstudio.com/items?itemName=branchline.docline-python-docstring-generator)** — the same idea for Python.
+- **[Docline — Instant Python Docstrings](https://marketplace.visualstudio.com/items?itemName=branchline.docline-python-docstring-generator)** — the same idea for Python.
 - **[Branchline — Git Graph](https://marketplace.visualstudio.com/items?itemName=branchline.branchline)** · **[TODO Lens](https://marketplace.visualstudio.com/items?itemName=branchline.todo-lens)** · **[Snapline](https://marketplace.visualstudio.com/items?itemName=branchline.snapline-code-screenshots)**
 
 ## Support
