@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import assert from 'node:assert/strict';
 
 export async function run(): Promise<void> {
-  await vscode.extensions.getExtension('branchline.doxline-doxygen-generator')!.activate();
+  await vscode.extensions.getExtension('branchline.doxline-doxygen-javadoc')!.activate();
   const uri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders![0].uri, 'math.cpp');
   const doc = await vscode.workspace.openTextDocument(uri);
   const editor = await vscode.window.showTextDocument(doc);
