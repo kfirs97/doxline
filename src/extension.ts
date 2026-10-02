@@ -4,6 +4,7 @@ import { undocumentedDeclarations } from './scan';
 import { docComment, snippetToText } from './generate';
 import { License } from './license';
 import { BUY_URL } from './licenseVerify';
+import { recordUse } from './nudge';
 
 const LANGUAGES = ['c', 'cpp', 'cuda-cpp', 'objective-c', 'objective-cpp', 'java'];
 
@@ -38,6 +39,7 @@ class CommentCompletion implements vscode.CompletionItemProvider {
     item.filterText = '/**';
     item.sortText = '\0';
     item.preselect = true;
+    item.command = { command: 'doxline.used', title: '' };
     return [item];
   }
 }
@@ -57,6 +59,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       if (!documentable(decl)) return void vscode.window.showInformationMessage('Put the cursor on a function, class, struct, enum or macro declaration.');
       const indent = indentOf(lines[line]);
       await editor.insertSnippet(new vscode.SnippetString(indent + withIndent(docComment(decl, options()), indent) + '\n'), new vscode.Position(line, 0));
+      void recordUse(context, license);
     }),
     vscode.commands.registerTextEditorCommand('doxline.generateFile', async editor => {
       if (!(await license.require('Documenting a whole file'))) return;
@@ -71,6 +74,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
       void vscode.window.showInformationMessage(`Doxline added ${decls.length} doc comment${decls.length === 1 ? '' : 's'}.`);
     }),
+    vscode.commands.registerCommand('doxline.used', () => recordUse(context, license)),
     vscode.commands.registerCommand('doxline.enterLicense', () => license.enterKey()),
     vscode.commands.registerCommand('doxline.removeLicense', () => license.removeKey()),
     vscode.commands.registerCommand('doxline.buyPro', () => vscode.env.openExternal(vscode.Uri.parse(BUY_URL))),
